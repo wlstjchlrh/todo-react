@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Javascript 첫 수업</title>
+    <script>
+      window.onload = function () { //window.onload- 컨텐츠가 다 만들어지면(모든 로딩이 다 끝나면) 요 안에 있는 걸 실행해라--dom.html파일과 다르게 head에 먼저 script를 넣어도 괜찮음
+        // DOM 조작하기
+        let statusNum = 1; //변수 statusNum 설정
+        const myParagraph = document.getElementById("my-paragraph"); //상수 설정, my-paragraph라는 id 속의 element를 가져와
+
+        myParagraph.innerHTML = "This is a new paragraph."; //바로 위의 myParagraph(my-paragraph라는 id 속의 element를 가져와)에서 "This is New paragraph"라는 문장(입력된 문자열)을 html의 형식으로 넣어서 조작해라
+        myParagraph.style.color = "red"; //바로 위의 myParagraph(my-paragraph라는 id 속의 element를 가져와)에서 해당 문자열의 style 중 color을 red로 설정해라
+
+        // 이벤트 처리 방법
+        const addButton = document.getElementById("어려워요"); //상수 설정, add-button이라는 id 속의 element를 가져와
+
+        addButton.addEventListener("click"/*수신할 이벤트 유형*/, function ()/*원래는 여기에 함수명만 받는데 이런 식으로 함수를 바로 직접 지정 하는 방식도 있는데 {  }안에 동작들을 작성해주면 됨*/ 
+        {
+          const actionStatus = document.getElementById("action-status"); //상수지정, action-status이라는 id 속의 element를 가져와
+
+          let clickStatus = document.createElement("div"); //변수 지정, div라는 element를 만들어(자바스크립트에서 html요소를 새롭게 만드는 방법, 기존에 html의 요소를 js에 가져오는 방식은 document.getElement())
+          clickStatus.setAttribute("class", "status"); //("속성","새로 바꿀 값")
+          clickStatus.innerHTML = String(statusNum) + ": 어려워요!"; //문자열간의 계산과 숫자의 계산은 다르게 처리되기 때문에 숫자형을 문자형으로 바꿔 자료형을 통일해줘야
+          statusNum += 1;
+
+          actionStatus.appendChild(clickStatus); //js에서 html에 작동을 적용시키는 방법!(document.createElement의 방향성과 동일한 맥락),appendChild를 해야 실제로 웹페이지에 clickstatus 생김
+        });
+
+        const delButton = document.getElementById("어려운 네가 바보다");
+
+        delButton.addEventListener("click", function () {
+          const status = document.getElementsByClassName("status");//status라는 이름을 가진 class에 속한 elements 들을 가지고 와라!!
+          status[status.length - 1].remove(); //class(리스트)에서 뒤에서 첫번째 element를 remove해라
+          statusNum -= 1; //-=가 뭐였지
+        });
+      };
+    </script>
+  </head>
+  <body>
+    <h1>JavaScript 첫 수업</h1> 
+
+    <p id="my-paragraph">This is a sample paragraph.</p> 
+    <button id="어려워요">어려워요</button>
+    <button id="어려운 네가 바보다">어려운 네가 바보다</button>
+    <p id="action-status">Status of Students:</p>
+  </body>
+</html>
