@@ -1,0 +1,23 @@
+body {
+  font-family: Arial, sans-serif;
+  text-align: center;
+}
+
+button {
+  font-size: 20px;
+  padding: 10px 20px;
+  margin-bottom: 20px;
+}
+
+#destination-container {
+  display: none;
+}
+
+#destination-name {
+  margin-top: 20px;
+}
+
+#destination-image {
+  max-width: 500px;
+  margin-top: 20px;
+}
