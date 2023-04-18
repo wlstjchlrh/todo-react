@@ -69,19 +69,8 @@ const TodoList = () => {
         //   padding: 5px;
         //   margin-bottom: 10px;
         // }
-        className="w-full p-1 mb-4 border border-gray-300 rounded box-shadow: 0 3px 3px 0 rgb(0 0 0 / 0.05) 
-        animation: bounce 1s infinite;
-
-        @keyframes bounce {
-          0%, 100% {
-            transform: translateY(-25%);
-            animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
-          }
-          50% {
-            transform: translateY(0);
-            animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
-          }
-        };"
+        className="w-full p-1 mb-4 border border-gray-300 shadow-sm 
+        animate-spin"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
