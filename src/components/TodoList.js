@@ -56,7 +56,7 @@ const TodoList = () => {
   // 컴포넌트를 렌더링합니다.
   return (
     <div className={styles.container}>
-      <h1 className="text-xl mb-4 font-bold underline underline-offset-4 decoration-double">
+      <h1 className="text-xl mb-4 font-bold underline underline-offset-4 decoration-double animate-spin">
         Todo List
       </h1>
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
@@ -69,8 +69,7 @@ const TodoList = () => {
         //   padding: 5px;
         //   margin-bottom: 10px;
         // }
-        className="w-full p-1 mb-4 border border-gray-300 shadow-sm 
-        animate-spin"
+        className="w-full p-1 mb-4 border border-gray-300 shadow-sm"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
