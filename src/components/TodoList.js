@@ -69,7 +69,7 @@ const TodoList = () => {
         //   padding: 5px;
         //   margin-bottom: 10px;
         // }
-        className="w-full p-1 mb-4 border border-gray-300 shadow-sm"
+        className="w-full p-1 mb-4 border border-gray-300 shadow-sm animate-spin"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
