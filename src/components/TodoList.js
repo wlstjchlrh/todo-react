@@ -31,9 +31,7 @@ const TodoList = () => {
 
   const getTodos = async () => {
     // Firestore 쿼리를 만듭니다.async function 은 비동기 함수, Firestore 데이터베이스에서 데이터를 가져와 React 컴포넌트에서 사용하는 todos 상태를 업데이트하는 역할을 수행
-    const q = query(todoCollection);
-    // const q = query(collection(db, "todos"), where("user", "==", user.uid));
-    // const q = query(todoCollection, orderBy("datetime", "desc"));
+    const q = query(todoCollection, orderBy("datetime", "desc"));
 
     // Firestore 에서 할 일 목록을 조회합니다.
     const results = await getDocs(q);
@@ -41,10 +39,18 @@ const TodoList = () => {
 
     // 가져온 할 일 목록을 newTodos 배열에 담습니다.
     results.docs.forEach((doc) => {
-      // console.log(doc.data());
+      console.log(doc.data());
       // id 값을 Firestore 에 저장한 값으로 지정하고, 나머지 데이터를 newTodos 배열에 담습니다.
       newTodos.push({ id: doc.id, ...doc.data() });
     });
+
+    results.docs.forEach((doc) => {
+      const todoData = doc.data();
+      console.log(todoData);
+      newTodos.push({ id: doc.id, ...todoData, datetime: todoData.datetime.toDate() });
+    });
+    
+
 
     setTodos(newTodos);
     //newTodos 배열을 setTodos 함수를 사용하여 todos 상태로 업데이트합니다. 이를 통해 React 컴포넌트에서 todos 상태를 사용할 수 있게 됩니다.
@@ -59,10 +65,9 @@ const TodoList = () => {
     if (input.trim() === "") return;
     const docRef = await addDoc(todoCollection, { 
       text: input,
-      completed: false,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      completed: false
     });
-    setTodos([...todos, { id: docRef.id, text: input, completed: false, createdAt: new Date() }]);
+    setTodos([...todos, { id: docRef.id, text: input, completed: false }]);
     setInput("");
   };
   
@@ -100,10 +105,10 @@ const TodoList = () => {
     );
   };
 
-  // 컴포넌트를 렌더링합니다.
+  // 컴포넌트를 렌더링합니다., <h1 classname="여기안에 tailwind 스타일 작성"
   return (
     <div className={styles.container}>
-      <h1 className="text-xl mb-4 font-bold underline underline-offset-4 decoration-wavy">
+      <h1 className="text-xl mb-4 font-bold underline underline-offset-4"> 
         Todo List
       </h1>
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
@@ -154,7 +159,7 @@ const TodoList = () => {
         {todos.map((todo) => (
           <TodoItem
             key={todo.id}
-            todo={todo}
+            todo={{...todo, date: new Date().toLocaleDateString()}} //date 항목 추가
             onToggle={() => toggleTodo(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
           />
