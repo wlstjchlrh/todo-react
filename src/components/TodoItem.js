@@ -23,10 +23,10 @@ const TodoItem = ({ todo, onToggle, onDelete }) => {
       >
         {todo.text}
       </span>
-      <span className={styles.todoDate}>{todo.date}</span>
+      <span className={styles.todoDate}>{todo.date}</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
       {/* 삭제 버튼을 렌더링하고, 클릭 시 onDelete 함수를 호출하여 해당 할 일을 삭제합니다. */}
-      <button onClick={onDelete}>Delete</button>
+      <button onClick={onDelete} className={'w-20 bg-cyan-600 text-white font-serif border rounded border-cyan-800 hover:bg-white hover:text-cyan-700 text-xs'}>Delete</button>
     </li>
   );
 };

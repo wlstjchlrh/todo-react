@@ -108,7 +108,7 @@ const TodoList = () => {
   // 컴포넌트를 렌더링합니다., <h1 classname="여기안에 tailwind 스타일 작성"
   return (
     <div className={styles.container}>
-      <h1 className="text-xl mb-4 font-bold underline underline-offset-4"> 
+      <h1 className="text-xl mb-4 font-bold underline decoration-dashed underline-offset-4 font-serif animate-bounce"> 
         Todo List
       </h1>
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
@@ -121,7 +121,7 @@ const TodoList = () => {
         //   padding: 5px;
         //   margin-bottom: 10px;
         // }
-        className="w-full p-1 mb-4 border border-gray-300 rounded"
+        className="w-full p-1 mb-4 border border-gray-300 rounded shadow-md"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
@@ -146,9 +146,9 @@ const TodoList = () => {
           className={`w-40
                       justify-self-end
                       p-1 mb-4
-                    bg-blue-500 text-white
-                      border border-blue-500 rounded
-                    hover:bg-white hover:text-blue-500`}
+                      bg-cyan-700 text-white font-serif
+                      border rounded border-cyan-800
+                    hover:bg-white hover:text-cyan-700`}
           onClick={addTodo}
         >
           Add Todo
