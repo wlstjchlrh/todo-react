@@ -9,7 +9,7 @@ const firebaseConfig = {
   storageBucket:"wp-firebase-b6e69.appspot.com",
   messagingSenderId:"547194047227",
   appId:"1:547194047227:web:9533100f3203f2ccc9be5e",
-  measurementId:"G-0BD28S31K4",
+  measurementId:"G-0BD28S31K4"
 };
 
 const app = initializeApp(firebaseConfig);
