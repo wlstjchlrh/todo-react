@@ -67,7 +67,7 @@ const TodoList = () => {
     // ...todos => {id: 1, text: "할일1", completed: false}, {id: 2, text: "할일2", completed: false}}, ..
 
     // Firestore 에 추가한 할 일을 저장합니다.
-    const datetime = new Date().toLocaleDataString(); // 현재 날짜와 시간을 가져옴
+    const datetime = new Date().toISOString(); // 현재 날짜와 시간을 가져옴
     const docRef = await addDoc(todoCollection, {
       text: input,
       completed: false,
