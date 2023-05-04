@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "type": "chrome",
+            "name": "http://Date.now(",
+            "request": "launch",
+            "url": "http://Date.now("
+        }
+    ]
+}

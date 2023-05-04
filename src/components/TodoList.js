@@ -1,4 +1,3 @@
-
 /* 
   할 일 목록을 관리하고 렌더링하는 주요 컴포넌트입니다.
   상태 관리를 위해 `useState` 훅을 사용하여 할 일 목록과 입력값을 관리합니다.
@@ -26,35 +25,29 @@ const todoCollection = collection(db, "todos");
 
 // TodoList 컴포넌트를 정의합니다.
 const TodoList = () => {
-  // 상태를 관리하는 useState 훅을 사용하여 할 일 목록을 업데이트하고 입력값을 초기화합니다.
+  // 상태를 관리하는 useState 훅을 사용하여 할 일 목록과 입력값을 초기화합니다.
   const [todos, setTodos] = useState([]);
   const [input, setInput] = useState("");
 
   const getTodos = async () => {
-    // Firestore 쿼리를 만듭니다.async function 은 비동기 함수, Firestore 데이터베이스에서 데이터를 가져와 React 컴포넌트에서 사용하는 todos 상태를 업데이트하는 역할을 수행
+    // Firestore 쿼리를 만듭니다.
     const q = query(todoCollection, orderBy("datetime", "desc"));
 
     // Firestore 에서 할 일 목록을 조회합니다.
     const results = await getDocs(q);
     const newTodos = [];
 
+
     // 가져온 할 일 목록을 newTodos 배열에 담습니다.
     results.docs.forEach((doc) => {
-      console.log(doc.data());
+      // console.log(doc.data());
       // id 값을 Firestore 에 저장한 값으로 지정하고, 나머지 데이터를 newTodos 배열에 담습니다.
       newTodos.push({ id: doc.id, ...doc.data() });
-    });
 
-    results.docs.forEach((doc) => {
-      const todoData = doc.data();
-      console.log(todoData);
-      newTodos.push({ id: doc.id, ...todoData, datetime: todoData.datetime.toDate() });
-    });
-    
 
+    });
 
     setTodos(newTodos);
-    //newTodos 배열을 setTodos 함수를 사용하여 todos 상태로 업데이트합니다. 이를 통해 React 컴포넌트에서 todos 상태를 사용할 수 있게 됩니다.
   };
 
   useEffect(() => {
@@ -63,22 +56,35 @@ const TodoList = () => {
 
   // addTodo 함수는 입력값을 이용하여 새로운 할 일을 목록에 추가하는 함수입니다.
   const addTodo = async () => {
+    // 입력값이 비어있는 경우 함수를 종료합니다.
     if (input.trim() === "") return;
-    const docRef = await addDoc(todoCollection, { 
+    // 기존 할 일 목록에 새로운 할 일을 추가하고, 입력값을 초기화합니다.
+    // {
+    //   id: 할일의 고유 id,
+    //   text: 할일의 내용,
+    //   completed: 완료 여부,
+    // }
+    // ...todos => {id: 1, text: "할일1", completed: false}, {id: 2, text: "할일2", completed: false}}, ..
+
+    // Firestore 에 추가한 할 일을 저장합니다.
+    const datetime = new Date().toISOString(); // 현재 날짜와 시간을 가져옴
+    const docRef = await addDoc(todoCollection, {
       text: input,
-      completed: false
+      completed: false,
+      datetime: datetime, // 생성일 추가
     });
-    setTodos([...todos, { id: docRef.id, text: input, completed: false }]);
+
+    // id 값을 Firestore 에 저장한 값으로 지정합니다.
+    setTodos([...todos, { id: docRef.id, text: input, completed: false, datetime: datetime }]);
     setInput("");
   };
-  
 
-  // toggleTodo 함수는 체크박스를 눌러 할 일의 완료 상태를 변경하는 함수
+  // toggleTodo 함수는 체크박스를 눌러 할 일의 완료 상태를 변경하는 함수입니다.
   const toggleTodo = (id) => {
-    // 할 일 목록에서 해당 id를 가진 할 일의 완료 상태를 반전
+    // 할 일 목록에서 해당 id를 가진 할 일의 완료 상태를 반전시킵니다.
     const newTodos = todos.map((todo) => {
       if (todo.id === id) {
-        // Firestore 에서 해당 id를 가진 할 일을 찾아 완료 상태를 업데이트
+        // Firestore 에서 해당 id를 가진 할 일을 찾아 완료 상태를 업데이트합니다.
         const todoDoc = doc(todoCollection, id);
         updateDoc(todoDoc, { completed: !todo.completed });
         // ...todo => id: 1, text: "할일1", completed: false
@@ -91,13 +97,13 @@ const TodoList = () => {
     setTodos(newTodos);
   };
 
-  // deleteTodo 함수는 할 일을 목록에서 삭제하는 함수
+  // deleteTodo 함수는 할 일을 목록에서 삭제하는 함수입니다.
   const deleteTodo = (id) => {
-    // Firestore 에서 해당 id를 가진 할 일을 삭제
+    // Firestore 에서 해당 id를 가진 할 일을 삭제합니다.
     const todoDoc = doc(todoCollection, id);
     deleteDoc(todoDoc);
 
-    // 해당 id를 가진 할 일을 제외한 나머지 목록을 새로운 상태로 저장
+    // 해당 id를 가진 할 일을 제외한 나머지 목록을 새로운 상태로 저장합니다.
     // setTodos(todos.filter((todo) => todo.id !== id));
     setTodos(
       todos.filter((todo) => {
@@ -106,10 +112,10 @@ const TodoList = () => {
     );
   };
 
-  // 컴포넌트를 렌더링합니다., <h1 classname="여기안에 tailwind 스타일 작성"
+  // 컴포넌트를 렌더링합니다.
   return (
     <div className={styles.container}>
-      <h1 className="text-xl mb-4 font-bold underline decoration-dashed underline-offset-4 font-serif animate-bounce"> 
+      <h1 className="text-xl mb-4 font-bold underline underline-offset-4 decoration-wavy">
         Todo List
       </h1>
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
@@ -122,19 +128,34 @@ const TodoList = () => {
         //   padding: 5px;
         //   margin-bottom: 10px;
         // }
-        className="w-full p-1 mb-4 border border-gray-300 rounded shadow-md"
+        className="w-full p-1 mb-4 border border-gray-300 rounded"
         value={input}
         onChange={(e) => setInput(e.target.value)}
       />
       {/* 할 일을 추가하는 버튼입니다. */}
       <div className="grid">
         <button
+          // className={styles.addButton}
+          // -- addButton CSS code --
+          // button.addButton {
+          //   padding: 5px;
+          //   background-color: #0070f3;
+          //   color: white;
+          //   border: 1px solid #0070f3;
+          //   border-radius: 5px;
+          //   cursor: pointer;
+          // }
+          //
+          // button.addButton:hover {
+          //   background-color: #fff;
+          //   color: #0070f3;
+          // }
           className={`w-40
                       justify-self-end
                       p-1 mb-4
-                      bg-cyan-700 text-white font-serif
-                      border rounded border-cyan-800
-                    hover:bg-white hover:text-cyan-700`}
+                    bg-blue-500 text-white
+                      border border-blue-500 rounded
+                    hover:bg-white hover:text-blue-500`}
           onClick={addTodo}
         >
           Add Todo
@@ -145,7 +166,7 @@ const TodoList = () => {
         {todos.map((todo) => (
           <TodoItem
             key={todo.id}
-            todo={{...todo, date: new Date().toLocaleDateString()}} //date 항목 추가
+            todo={todo}
             onToggle={() => toggleTodo(todo.id)}
             onDelete={() => deleteTodo(todo.id)}
           />
