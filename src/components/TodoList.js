@@ -128,21 +128,6 @@ const TodoList = () => {
       {/* 할 일을 추가하는 버튼입니다. */}
       <div className="grid">
         <button
-          // className={styles.addButton}
-          // -- addButton CSS code --
-          // button.addButton {
-          //   padding: 5px;
-          //   background-color: #0070f3;
-          //   color: white;
-          //   border: 1px solid #0070f3;
-          //   border-radius: 5px;
-          //   cursor: pointer;
-          // }
-          //
-          // button.addButton:hover {
-          //   background-color: #fff;
-          //   color: #0070f3;
-          // }
           className={`w-40
                       justify-self-end
                       p-1 mb-4
