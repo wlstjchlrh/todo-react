@@ -38,6 +38,7 @@ const TodoList = () => {
     const newTodos = [];
 
 
+
     // 가져온 할 일 목록을 newTodos 배열에 담습니다.
     results.docs.forEach((doc) => {
       // console.log(doc.data());
@@ -74,6 +75,7 @@ const TodoList = () => {
       datetime: datetime, // 생성일 추가
     });
 
+  
     // id 값을 Firestore 에 저장한 값으로 지정합니다.
     setTodos([...todos, { id: docRef.id, text: input, completed: false, datetime: datetime }]);
     setInput("");
