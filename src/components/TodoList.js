@@ -75,7 +75,7 @@ const TodoList = () => {
     });
 
     // id 값을 Firestore 에 저장한 값으로 지정합니다.
-    setTodos([...todos, { id: docRef.id, text: input, completed: false, datetime: datetime }]);
+    setTodos([...todos, { id: docRef.id, text: input, completed: false, datetime: datetime().toLocaleDateString() }]);
     setInput("");
   };
 
