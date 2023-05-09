@@ -131,6 +131,17 @@ const TodoList = () => {
       <h1 className="text-xl mb-4 font-bold underline decoration-dashed underline-offset-4 font-serif animate-bounce">
        {data?.user?.name}'s Todo List 
       </h1>
+      <button
+        className={`w-40
+                  justify-self-center
+                  p-1 mb-4
+                  text-blue-500
+                  border border-blue-500 rounded
+                  hover:bg-white hover:text-blue-500`}
+          onClick={() => signOut()}
+          >
+          Sign out
+      </button>
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
       <input
         type="text"
