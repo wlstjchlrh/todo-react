@@ -4,7 +4,7 @@
   할 일 목록의 추가, 삭제, 완료 상태 변경 등의 기능을 구현하였습니다.
 */
 import React, { useState, useEffect } from "react";
-import { useSession } from "next-auth/react";
+import { useSession,signOut } from "next-auth/react";
 import TodoItem from "@/components/TodoItem";
 import styles from "@/styles/TodoList.module.css";
 
@@ -128,20 +128,22 @@ const TodoList = () => {
   // 컴포넌트를 렌더링합니다.
   return (
     <div className={styles.container}>
-      <h1 className="text-xl mb-4 font-bold underline decoration-dashed underline-offset-4 font-serif animate-bounce">
-       {data?.user?.name}'s Todo List 
-      </h1>
       <button
-        className={`w-40
-                  justify-self-center
+        className={`w-30 
+                  justify-self-end
                   p-1 mb-4
-                  text-blue-500
-                  border border-blue-500 rounded
-                  hover:bg-white hover:text-blue-500`}
+                  font-serif
+                  text-cyan-700
+                  border border-cyan-700 rounded
+                  hover:bg-white hover:text-blue-500 text-xs`}
           onClick={() => signOut()}
           >
           Sign out
       </button>
+      <h1 className="text-xl mb-4 font-bold underline decoration-dashed underline-offset-4 font-serif animate-bounce">
+       {data?.user?.name}'s Todo List 
+      </h1>
+
       {/* 할 일을 입력받는 텍스트 필드입니다. */}
       <input
         type="text"
