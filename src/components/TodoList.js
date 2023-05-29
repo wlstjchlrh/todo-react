@@ -58,7 +58,7 @@ const TodoList = () => {
 
     });
 
-    setTodos(newTodos);
+    setTodos(newTodos); //todos 배열 업데이트
   };
 
   useEffect(() => {
